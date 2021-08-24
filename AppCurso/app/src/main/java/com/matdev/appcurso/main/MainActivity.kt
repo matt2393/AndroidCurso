@@ -1,5 +1,6 @@
 package com.matdev.appcurso.main
 
+import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,6 +9,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.size
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,11 +19,13 @@ import com.bumptech.glide.Glide
 import com.matdev.appcurso.R
 import com.matdev.appcurso.cart.CartActivity
 import com.matdev.appcurso.databinding.ActivityMainBinding
+import com.matdev.appcurso.getCart
 import com.matdev.appcurso.main.category.CategoryAdapter
 import com.matdev.appcurso.main.category.CategoryViewModel
 import com.matdev.appcurso.main.meal_star.MealStarAdapter
 import com.matdev.appcurso.main.meal_star.MealStarViewModel
 import com.matdev.appcurso.meal.MealActivity
+import com.matdev.appcurso.saveCart
 import java.util.*
 import kotlin.math.abs
 import kotlin.math.max
@@ -39,11 +43,27 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        adapterMeal = MealStarAdapter { url, image ->
+        adapterMeal = MealStarAdapter(loadImage =  { url, image ->
             Glide.with(this)
                 .load(url)
                 .into(image)
-        }
+        }, click = {
+            AlertDialog.Builder(this)
+                .setTitle("¿Esta seguro de añadir ${it.strMeal}?")
+                .setPositiveButton("Aceptar") { dialog, which ->
+                    var datos = getCart(this)
+                    if(datos==null) {
+                        datos = arrayListOf()
+                    }
+                    datos.add(it)
+                    saveCart(this, datos)
+                }
+                .setNegativeButton("Cancelar") { dialog, w ->
+                    dialog.dismiss()
+                }
+                .show()
+
+        })
         val pageMargin = resources.getDimensionPixelOffset(R.dimen.pageMargin).toFloat()
         val pageOffset = resources.getDimensionPixelOffset(R.dimen.offset).toFloat()
         binding.viewPagerMain.adapter = adapterMeal
@@ -94,7 +114,7 @@ class MainActivity : AppCompatActivity() {
         initObserves()
         viewModelMeal.getMealStars()
         viewModelCategories.getCategories()
-        val timerTask = object: TimerTask() {
+        /*val timerTask = object: TimerTask() {
             override fun run() {
                 runOnUiThread {
                     var i = binding.viewPagerMain.currentItem
@@ -109,15 +129,15 @@ class MainActivity : AppCompatActivity() {
             }
         }
         timer = Timer()
-        timer?.schedule(timerTask, 1000, 1000)
+        timer?.schedule(timerTask, 1000, 1000)*/
     }
 
     override fun onStop() {
         super.onStop()
         removeObservers()
-        timer?.cancel()
+        /* timer?.cancel()
         timer?.purge()
-        timer = null
+        timer = null*/
     }
 
     private fun initObserves() {

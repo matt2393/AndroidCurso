@@ -10,7 +10,8 @@ import com.matdev.appcurso.databinding.ItemMealViewpagerBinding
 import com.matdev.appcurso.model.entities.Meal
 
 class MealStarAdapter(var arrayMeals: ArrayList<Meal> = arrayListOf(),
-                      val loadImage: (url: String, image: ImageView) -> Unit): RecyclerView.Adapter<MealStarAdapter.MealStarViewHolder>() {
+                      val loadImage: (url: String, image: ImageView,) -> Unit,
+                      val click:(meal: Meal)->Unit): RecyclerView.Adapter<MealStarAdapter.MealStarViewHolder>() {
     inner class MealStarViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val binding = ItemMealViewpagerBinding.bind(itemView)
     }
@@ -24,6 +25,9 @@ class MealStarAdapter(var arrayMeals: ArrayList<Meal> = arrayListOf(),
     override fun onBindViewHolder(holder: MealStarViewHolder, position: Int) {
         val meal = arrayMeals[position]
         loadImage(meal.strMealThumb, holder.binding.imageMealViewPager)
+        holder.binding.root.setOnClickListener {
+            click(meal)
+        }
     }
 
     override fun getItemCount(): Int = arrayMeals.size

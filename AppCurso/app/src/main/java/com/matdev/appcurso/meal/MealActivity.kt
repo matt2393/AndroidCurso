@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
+import com.matdev.appcurso.ConfirmAddDialog
 import com.matdev.appcurso.R
 import com.matdev.appcurso.databinding.ActivityMealBinding
 import com.matdev.appcurso.getCart
@@ -40,12 +41,8 @@ class MealActivity : AppCompatActivity() {
                     .load(url)
                     .into(image)
             }, click = {
-                var datos = getCart(this)
-                if(datos==null) {
-                    datos = arrayListOf()
-                }
-                datos.add(it)
-                saveCart(this, datos)
+                ConfirmAddDialog.newInstance(it)
+                    .show(supportFragmentManager, "Confirm")
             })
             binding.recyclerMeals.layoutManager = GridLayoutManager(this, 2)
             binding.recyclerMeals.adapter = adapter

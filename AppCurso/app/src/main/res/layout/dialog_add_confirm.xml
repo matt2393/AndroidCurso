@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="15dp"
+        app:cardElevation="30dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp">
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:id="@+id/lottieDialog"
+                app:lottie_rawRes="@raw/food"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/textTitleDialog"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textTitleDialog"
+                android:layout_marginTop="15dp"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                app:layout_constraintTop_toBottomOf="@id/lottieDialog"
+                app:layout_constraintStart_toStartOf="@id/lottieDialog"
+                app:layout_constraintEnd_toEndOf="@id/lottieDialog"
+                app:layout_constraintBottom_toTopOf="@id/textDescDialog"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textDescDialog"
+                android:layout_marginTop="15dp"
+                android:textAlignment="center"
+                app:layout_constraintTop_toBottomOf="@id/textTitleDialog"
+                app:layout_constraintStart_toStartOf="@id/textTitleDialog"
+                app:layout_constraintEnd_toEndOf="@id/textTitleDialog"
+                app:layout_constraintBottom_toTopOf="@id/buttonCancelar"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/buttonCancelar"
+                android:text="Cancelar"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="5dp"
+                android:backgroundTint="@color/negative"
+                app:cornerRadius="20dp"
+                app:layout_constraintTop_toBottomOf="@id/textDescDialog"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/buttonAceptar"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/buttonAceptar"
+                android:text="Aceptar"
+                app:cornerRadius="20dp"
+                app:layout_constraintTop_toTopOf="@id/buttonCancelar"
+                app:layout_constraintStart_toEndOf="@id/buttonCancelar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/buttonCancelar"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
